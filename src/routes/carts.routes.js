@@ -2,7 +2,7 @@ import { Router } from "express";
 import {cartsService} from "../percistencia/index.js";
 
 
-const router = Router
+const router = Router();
 
 router.get("/" , async (req,res)=>{
     try{
