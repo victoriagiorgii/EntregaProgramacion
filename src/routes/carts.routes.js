@@ -3,6 +3,10 @@ import {cartsService} from "../percistencia/index.js";
 
 
 const router = Router();
+router.get("/",(req,res)=>{
+   
+    res.json({mensaje:"listado carrito"});
+});
 
 router.get("/" , async (req,res)=>{
     try{
@@ -27,7 +31,7 @@ router.post("/:cid/product/:pid", async (req,res)=>{
         const cartId= parseInt(req.params.cid);
         const productId = parseInt(req.params.pid);
 
-        res.json({mensaje:"peticin recibida"});
+        res.json({mensaje:"peticion recibida"});
     }catch (error){
         res.json({error:error.mensaje});
     }

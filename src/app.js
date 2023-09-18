@@ -1,13 +1,15 @@
 import express from "express";
+import { __dirname } from "./utils.js";
+
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 
 
 
-const port= 8080 ;
+const PORT= 8080 ;
 const app= express();
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.listen(port, () => console.log ('Seridor ejecutandose en el puerto 8080'));
+app.listen(PORT, () =>console.log ('SerVidor ejecutandose en el puerto ${PORT}'));
 
 

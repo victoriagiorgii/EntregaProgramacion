@@ -2,12 +2,13 @@ import fs from "fs";
 
 export class ProductsManagerFiles{
     constructor(path){
-        this.pathFiles= path
+        this.pathFiles= path;
     };
 
     fileExist(){
-        return existsSync(this.pathFiles);
-    }
+       
+        return fs.existsSync(this.pathFiles);
+    };
 
     async createProduct(productInfo){};
 
@@ -18,7 +19,7 @@ export class ProductsManagerFiles{
                 const products = JSON.parse(contenidoString);
                 return products;
             }else{
-                throw new Error (" No se pudo obtener productos")
+                 (" No se pudo obtener productos");
             }
         } catch (error) {
             throw error ;
@@ -34,7 +35,7 @@ export class ProductsManagerFiles{
                 if(!product){
                     throw new Error ("No existe el producto");
                 }
-                return product ;
+                return products ;
             }else{
                 throw new Error ("El producto no pudo obtener");
             }
