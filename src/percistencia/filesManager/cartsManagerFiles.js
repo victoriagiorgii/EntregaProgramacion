@@ -16,7 +16,7 @@ export class CartsManagerFiles{
                 const carts = JSON.parse(contenidoString);
                 return carts;
             }else {
-                throw new Error (" No se obtuvo el carrito");
+                throw new Error (" No se obtuvieron los productos");
             }
         } catch (error){
             throw error;
@@ -33,10 +33,10 @@ export class CartsManagerFiles{
                     product:[]
                 };
             carts.push(newCart);
-            await fs.promises.writeFile(this.pathFile,JSON.stringify(carts,null, '\t'));
+            await fs.promises.writeFile(this.pathFiles,JSON.stringify(carts,null, '\t'));
             return newCart;
          }else{
-            throw new Error (" No se obtuvo el carrito");
+            throw new Error (" No se obtuvieron los carritos");
          }
         
         } catch (error){

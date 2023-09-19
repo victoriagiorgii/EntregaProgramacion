@@ -1,21 +1,22 @@
 import { Router } from "express";
 import {cartsService} from "../percistencia/index.js";
 
-
 const router = Router();
-router.get("/",(req,res)=>{
+//router.get("/",(req,res)=>{
    
-    res.json({mensaje:"listado carrito"});
-});
-
+ //   res.json({mensaje:"listado carrito"});
+//});
 router.get("/" , async (req,res)=>{
     try{
-        const carts= await cartsService.getCarts()
-        res.json({data:carts});
+        let allCarts= await cartsService.getCarts();
+        return res.json(allCarts);
+    
     }catch (error){
-        res.json({error:error.mensaje});
+        res.status(400).json({error:true,mensaje:error});
     }
 });
+
+
 
 router.post("/", async (req,res)=>{
     try{

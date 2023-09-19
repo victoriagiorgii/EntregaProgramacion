@@ -4,6 +4,7 @@
         "title":"Aro",
         "description":"Aro corazon plata",
         "price":5000,
+        "status":"true",
         "code":"123"
     },
     {
@@ -11,6 +12,7 @@
         "title":"Pulsera",
         "description":"Pulsera perlas plata",
         "price":8500,
+        "status":"true",
         "code":"456"
     },
     {
@@ -18,6 +20,7 @@
         "title":"Collar",
         "description":"Collar inicial acero",
         "price":6400,
+        "status":"true",
         "code":"789"
     },
     {
@@ -25,6 +28,7 @@
         "title":"Pulsera",
         "description":"Pulsera cadena plata",
         "price":9000,
+        "status":"true",
         "code":"741"
     }
 ]

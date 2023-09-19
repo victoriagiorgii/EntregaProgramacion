@@ -15,7 +15,7 @@ export class ProductsManagerFiles{
     async getProducts(){
         try{
             if(this.fileExist()){
-                const contenidoString = await fs.promises.readFile(this.pathFile,"utf-8");
+                const contenidoString = await fs.promises.readFile(this.pathFiles,"utf-8");
                 const products = JSON.parse(contenidoString);
                 return products;
             }else{
@@ -29,13 +29,13 @@ export class ProductsManagerFiles{
     async getProductsById(productId){
         try{
             if(this.fileExist()){
-                const contenidoString = await fs.promises.readFile(this.pathFile,"utf-8");
+                const contenidoString = await fs.promises.readFile(this.pathFiles,"utf-8");
                 const products = JSON.parse(contenidoString);
-                const product = products.find(p=>p.id === productId)
+                const product = products.find(prod=>prod.id === productId)
                 if(!product){
                     throw new Error ("No existe el producto");
                 }
-                return products ;
+                return product ;
             }else{
                 throw new Error ("El producto no pudo obtener");
             }
@@ -48,4 +48,6 @@ export class ProductsManagerFiles{
     updatePtoduct(){};
 
     deleteProduct(){};
+
+    
 };

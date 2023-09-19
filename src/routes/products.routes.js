@@ -1,25 +1,31 @@
 import { Router } from "express";
 import {productsService} from "../percistencia/index.js"
-import { ProductsManagerFiles } from "../percistencia/filesManager/productsManagerFiles.js";
 
 
 const router = Router();
-//http://localhost:8080/api/products
-const products = new ProductsManagerFiles();
-const getProducts= products.getProducts();
 
-router.get("/api/products",async  (req, res) => {
-    let product = parseInt(req.query.limit);
-    if(!product) return res.json(getProducts)
-    let allProducts = await getProducts
-    let products = allProducts.slice(0, limit)
-    res.json(products);
-    //res.json({mensaje:"listado productos"});
+router.get("/",async  (req, res) => {
+    try{
+       let limit = parseInt(req.query.limit);
+       let allProducts = await productsService.getProducts();
+       if(!limit) 
+       return res.json(allProducts);
+       else{
+       let products = allProducts.slice(0, limit)
+       res.json(products);
+       }
+    }catch(error){
+        res.status(400).json({error:true,mensaje:error});
+    }
 });
 
 router.post("/", async (req,res)=>{
-    try{
-    const productInfo = req.body;
+
+   try{
+    let productInfo = (req.body);
+    let products= await productsService.createProduct(productInfo);
+    if(!products)
+     return res.json ({mensaje:"producto agregado"});
     }catch (error){
      res.json({status:"error",mensaje:error.mensaje});
     }
@@ -30,7 +36,7 @@ router.get("/:pid",async(req,res)=>{
     try {
         const productId = parseInt(req.params.pid);
         const product = await productsService.getProductsById(productId);
-        res.json({mensaje:"finaliza para obtener el producto", data:product});
+        res.json(product);
     } catch (error) {
         res.json({status:"error",mensaje:error.mensaje});
     }
