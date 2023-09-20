@@ -9,6 +9,6 @@ const PORT= 8080 ;
 const app= express();
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.listen(PORT, () =>console.log (`SerVidor ejecutandose en el puerto ${PORT}`));
+app.listen(PORT, () =>console.log (`Servidor ejecutandose en el puerto ${PORT}`));
 
 

@@ -4,11 +4,12 @@ import {cartsService} from "../percistencia/index.js";
 const router = Router();
 //router.get("/",(req,res)=>{
    
- //   res.json({mensaje:"listado carrito"});
+//res.json({mensaje:"listado carrito"});
 //});
 router.get("/" , async (req,res)=>{
     try{
-        let allCarts= await cartsService.getCarts();
+        const carts= parseInt(req.body)
+        const allCarts= await cartsService.getCarts(carts);
         return res.json(allCarts);
     
     }catch (error){
@@ -27,12 +28,13 @@ router.post("/", async (req,res)=>{
     }
 });
 
+
 router.post("/:cid/product/:pid", async (req,res)=>{
     try{
         const cartId= parseInt(req.params.cid);
-        const productId = parseInt(req.params.pid);
-
-        res.json({mensaje:"peticion recibida"});
+        const productId = parseInt (req.params.pid)
+        const log= await cartsService.addProduct(cartId,productId);
+        res.json({mensaje:"peticion recibida",data:log});
     }catch (error){
         res.json({error:error.mensaje});
     }
