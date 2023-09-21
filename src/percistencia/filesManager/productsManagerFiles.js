@@ -10,7 +10,8 @@ export class ProductsManagerFiles{
         return fs.existsSync(this.pathFiles);
     };
 
-    async createProduct(productInfo){};
+    async createProduct(productInfo){
+          }
 
     async getProducts(){
         try{
@@ -45,9 +46,42 @@ export class ProductsManagerFiles{
         }
     };
 
-    updatePtoduct(){};
 
-    deleteProduct(){};
-
+    async updateProduct(productId, updatedFields) {
+        try {
+          const products = await this.getProducts();
+          const product = products.find(prod => prod.id === productId);
+          if (product=== -1) {
+            throw new Error("Producto no encontrado");
+          }
+          const updateProduct = {
+            ...products[product],
+            ...updatedFields,
+            id
+          };
+          products[product] = updateProduct;
+          await fs.promises.writeFile(this.pathFiles, JSON.stringify(products, null, "\t"));
+          console.log("Producto actualizado:", updateProduct);
+          return updateProduct;
+        } catch (error) {
+          throw new Error("Error al actualizar producto.");
+        }
+      }
+    
+      async deleteProduct(productId) {
+        try {
+          const products = await this.getProducts();
+          const product = products.find(prod => prod.id === productId);
+          if (product === -1) {
+            throw new Error("Producto no encontrado");
+          }
+          const deleteProduct = products.splice(product, 1)[0];
+          await fs.promises.writeFile(this.pathFiles,JSON.stringify(products, null, "\t"));
+          console.log("Producto eliminado:", deleteProduct);
+          return deleteProduct;
+        } catch (error) {
+          throw new Error("Error al eliminar producto.");
+        }
+      }
     
 };

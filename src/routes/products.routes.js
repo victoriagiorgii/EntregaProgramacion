@@ -42,5 +42,25 @@ router.get("/:pid",async(req,res)=>{
     }
 });
 
+router.put("/:pid", async(req,res)=>{
+    try {
+        const productId = parseInt(req.params.pid);
+        const putProduct = req.body;
+       await productsService.updateProduct(productId);
+      res.json({"Producto Actualizado": putProduct});
+    } catch (error) {
+        res.json(error.mensaje);
+    }
+})
+
+router.delete("/:pid", async(req,res)=>{
+    try {
+        const productId = parseInt(req.params.pid);
+        await productsService.deleteProduct(productId);
+    } catch (error) {
+        res.send(error.mensaje);
+    }
+})
+
 
 export { router as productsRouter};
