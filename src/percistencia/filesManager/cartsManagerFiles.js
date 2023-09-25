@@ -27,16 +27,16 @@ export class CartsManagerFiles{
         try {
             if(this.fileExist()){
                 const contenidoString = await fs.promises.readFile(this.pathFiles,"utf-8");
-                const carts = JSON.parse(contenidoString);
+                const cart = JSON.parse(contenidoString);
                 let idCart;
-                carts.length === 0 ? idCart = 1 : idCart = carts.length + 1
+                cart.length === 0 ? idCart = 1 : idCart = cart.length + 1
 
                 const newCart = {
                     idCart,
                     products: [],
                 };
-                carts.push(newCart);
-                await fs.promises.writeFile(this.pathFiles, JSON.stringify(carts, null, '\t'));
+                cart.push(newCart);
+                await fs.promises.writeFile(this.pathFiles, JSON.stringify(cart, null, '\t'));
                 return `Se creó un nuevo carrito ${newCart}`;
             } else {
                 throw new Error("No se pudo crear el carrito")
@@ -47,29 +47,29 @@ export class CartsManagerFiles{
         };
     };
     async addProduct(cartId, productId){
+        console.log("id prod" ,productId);
         try {
             if (this.fileExist()) {
                 const contenidoString = await fs.promises.readFile(this.pathFiles, "utf-8");
                 const carts = JSON.parse(contenidoString);
-                
                 const cart = carts.find((item) => item.idCart === cartId);
                 if(cart){
-    
-                const existingProduct =cart.product.find((prod) => prod.id === productId);
+        
+                const products =cart.product.find((product) => product.id === productId);
                    
-                if (existingProduct) {
-                     existingProduct.quantity += 1;
+                if (products) {
+                     products.quantity += 1;
                  } else {
                         const newProduct = {
                             id: productId,
                             quantity: 1,
                         };
-                        cart.product.push(newProduct);
+                         cart.product.push(newProduct);
                     }
-    
-                const carritoNuevo = carts.filter((item)=>item.id !== cartId);
+        
+                const carritoNuevo = carts.filter((item)=>item.idCart !== cartId);
                 carritoNuevo.push(cart);
-                await fs.promises.writeFile(this.pathFiles,JSON.stringify(carts,null, '\t'));
+                await fs.promises.writeFile(this.pathFiles,JSON.stringify(carritoNuevo,null, '\t'));
                    
                 return` Se agregó el producto al carrito ${cartId}`;
                 } else {
@@ -83,5 +83,6 @@ export class CartsManagerFiles{
                console.log(error.mensaje);
                 throw error;
              }
-    }
-}
+         }
+        }
+       

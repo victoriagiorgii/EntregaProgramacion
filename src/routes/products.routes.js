@@ -22,10 +22,9 @@ router.get("/",async  (req, res) => {
 router.post("/", async (req,res)=>{
 
    try{
-    let productInfo = (req.body);
-    let products= await productsService.createProduct(productInfo);
-    if(!products)
-     return res.json ({mensaje:"producto agregado"});
+    const productInfo= req.body;
+    const products= await productsService.createProduct(productInfo);
+      res.json ({mensaje:"producto agregado",data: products});
     }catch (error){
      res.json({status:"error",mensaje:error.mensaje});
     }
@@ -45,7 +44,6 @@ router.get("/:pid",async(req,res)=>{
 router.put("/:pid", async(req,res)=>{
     try {
         const productId = parseInt(req.params.pid);
-        const putProduct = req.body;
        await productsService.updateProduct(productId);
       res.json({"Producto Actualizado": putProduct});
     } catch (error) {

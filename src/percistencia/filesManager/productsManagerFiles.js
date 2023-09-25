@@ -10,9 +10,6 @@ export class ProductsManagerFiles{
         return fs.existsSync(this.pathFiles);
     };
 
-    async createProduct(productInfo){
-          }
-
     async getProducts(){
         try{
             if(this.fileExist()){
@@ -26,6 +23,33 @@ export class ProductsManagerFiles{
             throw error ;
         }
     };
+
+
+    async createProduct(productInfo){
+        try {
+            if(this.fileExist()){
+                const contenidoString = await fs.promises.readFile(this.pathFiles,"utf-8");
+                const products = JSON.parse(contenidoString);
+                let idProduct;
+                products.length === 0 ? idProduct = 1 : productInfo = products.length + 1
+    
+                const newProduct = {
+                    idProduct,
+                    products:[productInfo,"title",
+                        "description",
+                        "price",
+                        "code"],
+                };
+                products.push(newProduct);
+                await fs.promises.writeFile(this.pathFiles, JSON.stringify(products, null, '\t'));
+                return `Se creó un nuevo carrito ${newProduct}`;
+            } else {
+                throw new Error("No se pudieron obtener los productos");
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async getProductsById(productId){
         try{
@@ -47,16 +71,16 @@ export class ProductsManagerFiles{
     };
 
 
-    async updateProduct(productId, updatedFields) {
+    async updateProduct(productId, productInfo) {
         try {
           const products = await this.getProducts();
-          const product = products.find(prod => prod.id === productId);
+          const product = products.findIndex(prod => prod.id === productId);
           if (product=== -1) {
             throw new Error("Producto no encontrado");
           }
           const updateProduct = {
             ...products[product],
-            ...updatedFields,
+            ...productInfo,
             id
           };
           products[product] = updateProduct;
@@ -66,12 +90,13 @@ export class ProductsManagerFiles{
         } catch (error) {
           throw new Error("Error al actualizar producto.");
         }
+        
       }
     
       async deleteProduct(productId) {
         try {
           const products = await this.getProducts();
-          const product = products.find(prod => prod.id === productId);
+          const product = products.findIndex(prod => prod.id === productId);
           if (product === -1) {
             throw new Error("Producto no encontrado");
           }
