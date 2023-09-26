@@ -71,7 +71,6 @@ export class ProductsManagerFiles{
         }
     };
 
-
     async updateProduct(productId, productInfo) {
         try {
           const products = await this.getProducts();
