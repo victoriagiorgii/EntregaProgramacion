@@ -30,41 +30,5 @@
 		"price": 9000,
 		"status": "true",
 		"code": "741"
-	},
-	{
-		"products": [
-			5
-		]
-	},
-	{
-		"products": [
-			6
-		]
-	},
-	{
-		"products": [
-			"title",
-			"description",
-			"price",
-			"code"
-		]
-	},
-	{
-		"products": [
-			8,
-			"title",
-			"description",
-			"price",
-			"code"
-		]
-	},
-	{
-		"products": [
-			9,
-			"title",
-			"description",
-			"price",
-			"code"
-		]
 	}
 ]

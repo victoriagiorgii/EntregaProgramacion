@@ -1,4 +1,5 @@
 import fs from "fs";
+import { title } from "process";
 
 export class ProductsManagerFiles{
     constructor(path){
@@ -24,32 +25,32 @@ export class ProductsManagerFiles{
         }
     };
 
-
     async createProduct(productInfo){
         try {
             if(this.fileExist()){
                 const contenidoString = await fs.promises.readFile(this.pathFiles,"utf-8");
                 const products = JSON.parse(contenidoString);
                 let idProduct;
-                products.length === 0 ? idProduct = 1 : productInfo = products.length + 1
-    
-                const newProduct = {
-                    idProduct,
-                    products:[productInfo,"title",
-                        "description",
-                        "price",
-                        "code"],
+                products.length === 0 ? idProduct = 1 : idProduct = products.length + 1
+            
+                let newProduct={
+                    id:idProduct,
+                    title: productInfo.title,
+                    description: productInfo.description,
+                    price: productInfo.price,
+                    code: productInfo.code
                 };
-                products.push(newProduct);
+             products.push(newProduct);
                 await fs.promises.writeFile(this.pathFiles, JSON.stringify(products, null, '\t'));
                 return `Se creó un nuevo carrito ${newProduct}`;
             } else {
                 throw new Error("No se pudieron obtener los productos");
             }
-        } catch (error) {
+            } catch (error) {
             throw error;
-        }
+            }
     }
+ 
 
     async getProductsById(productId){
         try{

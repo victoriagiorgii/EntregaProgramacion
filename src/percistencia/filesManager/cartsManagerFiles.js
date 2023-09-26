@@ -55,7 +55,7 @@ export class CartsManagerFiles{
                 const cart = carts.find((item) => item.idCart === cartId);
                 if(cart){
         
-                const products =cart.product.find((product) => product.id === productId);
+                const products =cart.products.find((product) => product.id === productId);
                    
                 if (products) {
                      products.quantity += 1;
@@ -64,7 +64,7 @@ export class CartsManagerFiles{
                             id: productId,
                             quantity: 1,
                         };
-                         cart.product.push(newProduct);
+                         cart.products.push(newProduct);
                     }
         
                 const carritoNuevo = carts.filter((item)=>item.idCart !== cartId);
