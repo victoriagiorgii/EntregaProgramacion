@@ -1,6 +1,5 @@
 
-
-const socketClient = io();
+const socketClient=io();
 
 const productsList = document.getElementById("productsList");
 
@@ -25,10 +24,10 @@ createProductForm.addEventListener("submit",(e) =>{
 socketClient.on("productsArray",(dataProduct)=>{
     console.log(dataProduct);
     let productsElem="";
-    dataProduct.forEach(product =>{
+    dataProduct.forEach(products =>{
         productsElem += 
       `<li>
-           <p>Nombre:${product.title}</p><button onclick="deleteProduct(${product.id})">Eliminar</button>
+           <p>Nombre:${products.title}</p><button onclick="deleteProduct(${products.id})">Eliminar</button>
         </li>`
     });    
     //console.log(productsElem);
@@ -39,5 +38,3 @@ socketClient.on("productsArray",(dataProduct)=>{
 const deleteProduct = (productId) =>{
     socketClient.emit("deleteProduct", productId)
 }
-
-

@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import { __dirname } from "./utils.js";
 import { Server } from "socket.io";
 import { engine } from "express-handlebars";

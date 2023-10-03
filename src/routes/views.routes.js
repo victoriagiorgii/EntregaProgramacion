@@ -1,11 +1,14 @@
 import { Router } from "express";
-import  "../public/js/realTime.js";
+import { productsService } from "../percistencia/index.js";
+
+
 const router = Router();
 
 router.get("/", async (req,res)=>{
+
   const products = await productsService.getProducts();
   console.log("products", products);
-  res.render("home",{products: products});
+  res.render("inicio",{products: products});
 });
 
 router.get("/realtimeproducts",(req,res)=>{
