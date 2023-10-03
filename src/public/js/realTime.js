@@ -21,10 +21,10 @@ createProductForm.addEventListener("submit",(e) =>{
 });
 
 
-socketClient.on("productsArray",(dataProduct)=>{
-    console.log(dataProduct);
+socketClient.on("productsArray",(productsData)=>{
+    console.log(productsData);
     let productsElem="";
-    dataProduct.forEach(products =>{
+    productsData.forEach(products =>{
         productsElem += 
       `<li>
            <p>Nombre:${products.title}</p><button onclick="deleteProduct(${products.id})">Eliminar</button>

@@ -1,5 +1,5 @@
 [
-    {
+	{
 		"id": 1,
 		"title": "Aro",
 		"description": "Aro corazon plata",
@@ -36,5 +36,11 @@
 		"description": "collar perla plata",
 		"price": 10800,
 		"code": "466"
+	},
+	{
+		"id": 6,
+		"title": "Pulsera",
+		"price": 4600,
+		"code": "349"
 	}
 ]

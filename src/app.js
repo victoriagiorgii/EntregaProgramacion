@@ -44,7 +44,7 @@ io.on("connection", async (socket)=>{
     const products = await productsService.getProducts();
     socket.emit("productsArray", products);
 
-    socket.on("addProducts", async(productsData)=>{
+    socket.on("addProduct", async(productsData)=>{
      const result = await productsService.createProduct(productsData)
      const products = await productsService.getProducts(result);
      io.emit("productsArray", products);
