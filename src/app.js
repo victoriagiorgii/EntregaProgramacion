@@ -9,6 +9,9 @@ import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { viewsRouter } from "./routes/views.routes.js";
 
+import { connectDB } from "./config/dbConnection.js";
+import { chatService } from "./percistencia/index.js";
+
 
 
 
@@ -22,6 +25,8 @@ app.use(express.json());
 const httpServer = app.listen(PORT,()=>console.log(`Servidor ejecutandose en el puerto ${PORT}`));
 
 const io = new Server(httpServer);
+
+connectDB();
 
 app.use(viewsRouter);
 
