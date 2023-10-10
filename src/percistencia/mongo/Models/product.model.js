@@ -20,11 +20,6 @@ const productSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    category:{
-        type:String,
-        required:true,
-        enum:["Goya","Tendencia", "Finura"]
-    },
     stock:{
         type:Number,
         required:true

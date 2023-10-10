@@ -26,7 +26,7 @@ const httpServer = app.listen(PORT,()=>console.log(`Servidor ejecutandose en el 
 
 const io = new Server(httpServer);
 
-connectDB();
+ await connectDB();
 
 app.use(viewsRouter);
 
@@ -56,10 +56,12 @@ io.on("connection", async (socket)=>{
     });
 
     socket.on("deleteProduct", async (deletedId) => { 
+        console.log(deletedId);
         const newProducts = await productsService.deleteProduct(deletedId);
         const products = await productsService.getProducts(newProducts);
             io.emit("productsArray", products);
         });
+        
 });
 
 

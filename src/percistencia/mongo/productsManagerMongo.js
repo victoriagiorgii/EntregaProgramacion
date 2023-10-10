@@ -50,9 +50,9 @@ export class ProductsManagerMongo{
         }
     };
 
-    async deleteProduct(productId){
+    async deleteProduct(product_Id){
         try {
-            const result = await this.model.findByIdAndDelete(productId);
+            const result = await this.model.findByIdAndDelete(product_Id);
             if(!result){
                 throw new Error("No se pudo encontrar el producto a eliminar");
             }
@@ -61,5 +61,6 @@ export class ProductsManagerMongo{
             console.log("deleteProduct",error.message);
             throw new Error("No se pudo eliminar el producto");
         }
+
     };
 };

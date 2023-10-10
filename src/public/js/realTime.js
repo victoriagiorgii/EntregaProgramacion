@@ -35,6 +35,6 @@ socketClient.on("productsArray",(productsData)=>{
      
 });
 
-const deleteProduct = (productId) =>{
-    socketClient.emit("deleteProduct", productId)
+const deleteProduct = (product_id) =>{
+    socketClient.emit("deleteProduct", product_id)
 }
