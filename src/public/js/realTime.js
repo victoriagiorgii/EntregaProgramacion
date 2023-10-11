@@ -24,10 +24,10 @@ createProductForm.addEventListener("submit",(e) =>{
 socketClient.on("productsArray",(productsData)=>{
     console.log(productsData);
     let productsElem="";
-    productsData.forEach(products =>{
+    productsData.forEach(products=>{
         productsElem += 
       `<li>
-           <p>Nombre:${products.title}</p><button onclick="deleteProduct(${products.id})">Eliminar</button>
+           <p>Nombre:${products.title}</p><button onclick="deleteProduct('${products._id}')">Eliminar</button>
         </li>`
     });    
     //console.log(productsElem);

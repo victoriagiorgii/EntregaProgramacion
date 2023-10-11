@@ -50,9 +50,9 @@ export class ProductsManagerMongo{
         }
     };
 
-    async deleteProduct(product_Id){
+    async deleteProduct(product_id){
         try {
-            const result = await this.model.findByIdAndDelete(product_Id);
+            const result = await this.model.findByIdAndDelete(product_id);
             if(!result){
                 throw new Error("No se pudo encontrar el producto a eliminar");
             }
