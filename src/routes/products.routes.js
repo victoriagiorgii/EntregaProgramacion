@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/",async  (req, res) => {
     try{
-       let limit = parseInt(req.query.limit);
+       let limit = req.query.limit;
        let allProducts = await productsService.getProducts();
        if(!limit) 
        return res.json(allProducts);
@@ -33,7 +33,7 @@ router.post("/", async (req,res)=>{
 
 router.get("/:pid",async(req,res)=>{
     try {
-        const productId = parseInt(req.params.pid);
+        const productId = req.params.pid;
         const product = await productsService.getProductsById(productId);
         res.json(product);
     } catch (error) {
@@ -43,7 +43,7 @@ router.get("/:pid",async(req,res)=>{
 
 router.put("/:pid", async(req,res)=>{
     try {
-        const productId = parseInt(req.params.pid);
+        const productId = req.params.pid;
        await productsService.updateProduct(productId);
       res.json({"Producto Actualizado": putProduct});
     } catch (error) {
@@ -53,10 +53,10 @@ router.put("/:pid", async(req,res)=>{
 
 router.delete("/:pid", async(req,res)=>{
     try {
-        const productId = parseInt(req.params.pid);
+        const productId = req.params.pid;
         await productsService.deleteProduct(productId);
     } catch (error) {
-        res.send(error.mensaje);
+        res.send('el producto fue eliminado productId',error.mensaje);
     }
 })
 
