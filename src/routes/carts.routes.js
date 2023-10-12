@@ -17,7 +17,7 @@ router.get("/" , async (req,res)=>{
     }
 });
 
-router.get("/cid" , async (req,res)=>{
+router.get("/:cid" , async (req,res)=>{
     try{
         const cartId= req.params.cid;
         const carts= await cartsService.getCartById(cartId);
@@ -52,7 +52,7 @@ router.put("/:cid/product/:pid", async (req,res)=>{
     }
 });
 
-router.delete("/:cid/products/:pid", async(req,res)=>{
+router.delete("/:cid/product/:pid", async(req,res)=>{
     try {
         const {cid:cartId,pid:productId} = req.params;
         const carts = await cartsService.getCartById(cartId);

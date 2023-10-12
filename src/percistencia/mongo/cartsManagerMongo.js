@@ -45,13 +45,17 @@ export class CartsManagerMongo{
     async addProduct(cartId, productId){
         try {
             const carts = await this.getCartById(cartId);
-            // const productExist = cart.products.find(elm=>elm.productId._id == productId);
-            // console.log("productExist",productExist);
-            const newProductCart = {
-                productId:productId,
-                quantity:1
-            }
-            carts.products.push(newProductCart);
+            const productExist=carts.products.find(elm=>elm.productId._id == productId)
+            let quantity= 1;
+             if(productExist){
+                quantity=productExist.quantity +1
+               
+              }
+                let newProductCart = {
+                    productId:productId,
+                    quantity:quantity,
+                };
+                carts.products.push(newProductCart);
             const result = await this.model.findByIdAndUpdate(cartId,carts, {new:true});
             return result;
         } catch (error) {
@@ -66,7 +70,7 @@ export class CartsManagerMongo{
             const productExist = carts.products.find(elm=>elm.productId._id == productId);
             if(productExist){
                 //si el producto existe en el carrito
-                const newProducts = carts.products.filter(elm => elm.productId._id != productId);
+                let newProducts = carts.products.filter(elm => elm.productId._id != productId);
                 carts.products = newProducts;
                 const result = await this.model.findByIdAndUpdate(cartId,carts, {new:true});
                 return result;
