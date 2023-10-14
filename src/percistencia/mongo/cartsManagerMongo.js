@@ -45,17 +45,15 @@ export class CartsManagerMongo{
     async addProduct(cartId, productId){
         try {
             const carts = await this.getCartById(cartId);
-            const productExist=carts.products.find(elm=>elm.productId._id == productId)
-            let quantity= 1;
-             if(productExist){
-                quantity=productExist.quantity +1
+            const productExist=carts.products.findIndex(elm=>elm.productId._id == productId)
+            
+             if(productExist!=-1){
+                carts.products[productExist].quantity++;
                
-              }
-                let newProductCart = {
-                    productId:productId,
-                    quantity:quantity,
-                };
-                carts.products.push(newProductCart);
+              }else{
+                carts.products.push({productId,quantity:1});
+
+            }
             const result = await this.model.findByIdAndUpdate(cartId,carts, {new:true});
             return result;
         } catch (error) {
