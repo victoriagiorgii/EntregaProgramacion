@@ -1,4 +1,3 @@
-console.log("javascript en el frontend");
 //socket del cliente
 const socketClient = io();
 

@@ -16,6 +16,8 @@ import { chatService } from "./percistencia/index.js";
 
 
 
+
+
 const PORT= 8080 ;
 const app= express();
 app.use(express.json());
@@ -41,7 +43,23 @@ app.engine('.handlebars', engine({extname: '.handlebars'}));
 app.set('view engine', '.handlebars');
 app.set('views', path.join(__dirname,"/views"));
 
+//socket servidor
 
+
+io.on("connection", async(socket)=>{
+    let chat = await chatService.getMessages() ;
+    socket.emit("chatHistory", chat);
+
+
+    socket.on("msgChat", (data)=>{
+        chat.push(data);
+        io.emit("chatHistory", chat)
+    });
+
+    socket.on("authenticated", (data)=>{
+        socket.broadcast.emit("newUser",`El usuario ${data} se acaba de conectar`);
+    })
+});
 
 
 

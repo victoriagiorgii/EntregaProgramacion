@@ -15,5 +15,8 @@ router.get("/realtimeproducts",(req,res)=>{
     res.render("realTime");
   });
 
+router.get("/chat", (req,res)=>{
+  res.render("chat");
+});
 
 export {router as viewsRouter}
