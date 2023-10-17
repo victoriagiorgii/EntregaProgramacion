@@ -44,6 +44,7 @@ app.set('views', path.join(__dirname,"/views"));
 
 
 
+
 io.on("connection", async (socket)=>{
     console.log("cliente conectado");
     const products = await productsService.getProducts();
@@ -63,6 +64,9 @@ io.on("connection", async (socket)=>{
         });
         
 });
+
+
+
 
 
 
