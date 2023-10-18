@@ -13,11 +13,6 @@ import { connectDB } from "./config/dbConnection.js";
 import { chatService } from "./percistencia/index.js";
 
 
-
-
-
-
-
 const PORT= 8080 ;
 const app= express();
 app.use(express.json());
@@ -50,11 +45,17 @@ io.on("connection", async(socket)=>{
     let chat = await chatService.getMessages() ;
     socket.emit("chatHistory", chat);
 
-
     socket.on("msgChat", (data)=>{
         chat.push(data);
         io.emit("chatHistory", chat)
     });
+
+    socket.on("msgChat", async (data) => {
+        if (data.message.trim() !== "") {
+          await chatService.addMessage(data); // Agregar mensaje a la base de datos
+          io.emit("chatHistory", chat);
+        }
+      });
 
     socket.on("authenticated", (data)=>{
         socket.broadcast.emit("newUser",`El usuario ${data} se acaba de conectar`);
