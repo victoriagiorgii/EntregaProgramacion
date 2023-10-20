@@ -44,7 +44,6 @@ router.put("/:cid/product/:pid", async (req,res)=>{
     try{
         const {cid:cartId,pid:productId} = req.params;
         const carts = await cartsService.getCartById(cartId);
-        // const product = await productsService.getProductById(productId);
         const result = await cartsService.addProduct(cartId,productId);
         res.json({status:"success", result});
     }catch (error){
@@ -60,6 +59,18 @@ router.delete("/:cid/product/:pid", async(req,res)=>{
         res.json({status:"success", result});
     } catch (error) {
         res.json({error:error.message});
+    }
+});
+
+router.put("/:cid/products/:pid", async(req,res)=>{
+    try{
+        const {cid:cartId, pid:productId} = req.params;
+        const {newQuantity} = req.body;
+        const cart = await cartsService.getCartById(cartId);
+        const result = await cartsService.updateProductCart(cartId,productId,newQuantity);
+        res.json({status:"success", result});
+    }catch (error){
+        res.json({error:error.mensaje});
     }
 });
 

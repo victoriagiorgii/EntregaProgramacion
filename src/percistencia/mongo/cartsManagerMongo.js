@@ -81,4 +81,22 @@ export class CartsManagerMongo{
         }
     };
 
+    async updateProductCart(cartId, productId, newQuantity){
+        try {
+            const cart = await this.getCartById(cartId);
+            const productExist = cart.products.findIndex(elm => elm.productId._id == productId);
+            if(productExist>=0 ){
+                console.log(cart.products[productExist])
+                cart.products[productExist]. quantity = newQuantity;
+          const result = await this.model.findByIdAndUpdate(cartId, cart, {new:true});
+          return result;
+         }else{
+            throw new Error ("El producto no se puede actualizar ")
+          }
+       } catch (error) {
+         console.log("updateProductCart", error.message);
+          throw new Error ("No se puedo actualizar el producto del carrito"); 
+        }
+    };
+
 };

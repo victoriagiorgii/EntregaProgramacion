@@ -33,6 +33,9 @@ app.use("/api/carts", cartsRouter);
 
 app.use(express.static(path.join(__dirname,"/public")));
 
+app.use(express.urlencoded({extended:true}));
+
+
 //handlebars
 app.engine('.handlebars', engine({extname: '.handlebars'}));
 app.set('view engine', '.handlebars');
