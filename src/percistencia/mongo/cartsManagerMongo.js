@@ -99,4 +99,19 @@ export class CartsManagerMongo{
         }
     };
 
+    async deleteCart(id) {
+        try {
+          const result = await this.model.findByIdAndDelete(id);
+          if (!result) {
+            throw new Error("cart not found");
+          } else {
+            return result;
+          }
+        } catch (error) {
+          console.log(`delete cart error: ${error.message}`);
+          throw new Error(`delete cart error: ${error.message}`);
+        }
+      }
+    
+
 };

@@ -73,5 +73,17 @@ router.put("/:cid/products/:pid", async(req,res)=>{
         res.json({error:error.mensaje});
     }
 });
+router.delete("/:cid", async (req, res) => {
+    try {
+      const cid = req.params.cid;
+      await cartsService.deleteCart(cid);
+      res.json({
+        status: "success",
+        message: "Se elimino con exito",
+      });
+    } catch (error) {
+      res.json({ status: "error", message: error.message });
+    }
+  });
 
 export {router as cartsRouter}
