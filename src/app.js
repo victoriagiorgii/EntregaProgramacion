@@ -11,6 +11,9 @@ import { viewsRouter } from "./routes/views.routes.js";
 
 import { connectDB } from "./config/dbConnection.js";
 import { chatService } from "./percistencia/index.js";
+import { productsModel } from "./percistencia/mongo/Models/product.model.js";
+import mongoose from "mongoose";
+
 
 
 const PORT= 8080 ;
@@ -34,6 +37,30 @@ app.use("/api/carts", cartsRouter);
 app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(express.urlencoded({extended:true}));
+
+const products=[];
+const operationsDB = async()=>{
+    try {
+        await mongoose.connect('mongodb+srv://victoria:victoriaAtlas@cluster0.wzeltg5.mongodb.net/coder?retryWrites=true&w=majority');
+        console.log("base de datos conectada");
+        // const result = await studentsModel.create(students);
+        // console.log(result);
+        const result = await productsModel.paginate(
+            {
+                //filtros de los datos
+            },
+            {
+                limit:6,
+                page:4
+            }
+        );
+        console.log(result);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+operationsDB();
+
 
 
 //handlebars
