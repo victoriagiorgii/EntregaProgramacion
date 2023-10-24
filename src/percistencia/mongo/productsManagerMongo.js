@@ -17,13 +17,24 @@ export class ProductsManagerMongo{
 
     async getProducts(){
         try {
-            const result = await this.model.find();
+            const result = await this.model.find().lean();
             return result;
         } catch (error) {
             console.log("getProducts",error.message);
             throw new Error("No se pudo obtener el listado de productos");
         }
     };
+
+    async getProductsPaginate(query, options) {
+        try {
+          const result = await this.model.paginate({},{limit:5,page:1, lean:true});
+          return result;
+        } catch (error) {
+          console.log(`get products error: ${error.message}`);
+          throw new Error("Se produjo un error al crear al producto");
+        }
+      };
+    
 
     async getProductsById(productId){
         try {

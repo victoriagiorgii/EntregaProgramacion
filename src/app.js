@@ -38,28 +38,7 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(express.urlencoded({extended:true}));
 
-const products=[];
-const operationsDB = async()=>{
-    try {
-        await mongoose.connect('mongodb+srv://victoria:victoriaAtlas@cluster0.wzeltg5.mongodb.net/coder?retryWrites=true&w=majority');
-        console.log("base de datos conectada");
-        // const result = await studentsModel.create(students);
-        // console.log(result);
-        const result = await productsModel.paginate(
-            {
-                //filtros de los datos
-            },
-            {
-                limit:6,
-                page:1
-            }
-        );
-        console.log(result);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-operationsDB();
+
 
 
 
@@ -70,7 +49,7 @@ app.set('views', path.join(__dirname,"/views"));
 
 //socket servidor
 
-
+//chat
 io.on("connection", async(socket)=>{
     let chat = await chatService.getMessages() ;
     socket.emit("chatHistory", chat);
@@ -93,7 +72,7 @@ io.on("connection", async(socket)=>{
 });
 
 
-
+//product
 io.on("connection", async (socket)=>{
     console.log("cliente conectado");
     const products = await productsService.getProducts();

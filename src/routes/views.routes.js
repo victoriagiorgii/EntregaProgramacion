@@ -7,9 +7,9 @@ const router = Router();
 
 router.get("/", async (req,res)=>{
 
-  const products = await productsService.getProducts();
-  console.log("products", products);
-  res.render("index",{products: products});
+  const docs = await productsService.getProducts();
+  console.log("products", docs);
+  res.render("index",{docs: docs});
 });
 
 router.get("/realtimeproducts",(req,res)=>{
@@ -20,12 +20,43 @@ router.get("/chat", (req,res)=>{
   res.render("chat");
 });
 
-router.get("/", async(req,res)=>{
+router.get("/paginate", async(req,res)=>{
   try {
-      const {page}= req.query;
-      const result = await productsModel.paginate({},{limit:5,page:parseInt(page),lean:true});
+    const {page}=req.query
+      const result = await productsService.getProductsPaginate();
       console.log(result);
-      res.render("paginate", result);
+      const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+
+      const dataProducts={
+        status:"success",
+        payload:result.docs,
+        totalPages:result.totalPages,
+        prevPage: result.prevPage,
+        nextPage: result.nextPage,
+        page: result.page,
+        hasPrevPage: result.hasPrevPage,
+        hasNextPage: result.hasNextPage,
+        prevLink: result.hasPrevPage
+        ? //reemplaza la pagina actual, por la pagina anterior
+          `${baseUrl.replace(
+            `page=${result.page}`,
+            `page=${result.nextPage}` 
+            )}`   
+        : null,
+        nextLink:result.hasNextPage
+        ? baseUrl.includes("page")
+          ? baseUrl.replace(
+              `page=${result.page}`,
+              `page=${result.nextPage}`
+            )
+          : baseUrl.concat(`?page=${result.nextPage}`)
+        : null,
+        
+        
+      
+    };
+
+      res.render("index",dataProducts);
   } catch (error) {
       res.send(error.message);
   }

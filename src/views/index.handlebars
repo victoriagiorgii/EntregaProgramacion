@@ -6,4 +6,28 @@
 {{#each docs}}
   <p>Nombre del producto: {{this.title}}</p>
 {{/each}}
+{{#each payload}}
+    
+      <div>
+        <p>Nombre producto:{{this.title}}</p>
+        <p> Descripcion {{this.description}}</p>
+        <p>$ {{this.price}}</h4>
+        <p>stock: {{this.stock}}</p>
+
+        <button onclick="addToCart(`{{this._id}}`)">
+          Agregar al carrito
+        </button>
+      </div>
+  
+  {{/each}}
+  
+  
+  <div >
+    {{#if prevLink}}
+      <a href="{{prevLink}}"> Anterior</a>
+    {{/if}}
+    {{#if nextLink}}
+      <a href="{{nextLink}}"> Siguiente</a>
+    {{/if}}
+  </div>
 </div>
