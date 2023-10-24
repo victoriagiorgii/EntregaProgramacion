@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { productsService } from "../percistencia/index.js";
+import { productsModel } from "../percistencia/mongo/Models/product.model.js";
 
 
 const router = Router();
@@ -17,6 +18,17 @@ router.get("/realtimeproducts",(req,res)=>{
 
 router.get("/chat", (req,res)=>{
   res.render("chat");
+});
+
+router.get("/", async(req,res)=>{
+  try {
+      const {page}= req.query;
+      const result = await productsModel.paginate({},{limit:5,page:parseInt(page),lean:true});
+      console.log(result);
+      res.render("paginate", result);
+  } catch (error) {
+      res.send(error.message);
+  }
 });
 
 export {router as viewsRouter}

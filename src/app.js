@@ -51,7 +51,7 @@ const operationsDB = async()=>{
             },
             {
                 limit:6,
-                page:4
+                page:1
             }
         );
         console.log(result);
