@@ -27,7 +27,7 @@ export class ProductsManagerMongo{
 
     async getProductsPaginate(query, options) {
         try {
-          const result = await this.model.paginate({},{limit:5,page:1, lean:true});
+          const result = await this.model.paginate(query,options);
           return result;
         } catch (error) {
           console.log(`get products error: ${error.message}`);

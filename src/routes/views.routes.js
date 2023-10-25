@@ -22,8 +22,15 @@ router.get("/chat", (req,res)=>{
 
 router.get("/paginate", async(req,res)=>{
   try {
-    const {page}=req.query
-      const result = await productsService.getProductsPaginate();
+    const { limit = 4, page = 1, sort = { price: 1 } } = req.query;
+    const query = {};
+    const options = {
+      limit,
+      page,
+      sort,
+      lean: true,
+    };
+      const result = await productsService.getProductsPaginate(query,options);
       console.log(result);
       const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
 
@@ -55,7 +62,7 @@ router.get("/paginate", async(req,res)=>{
         
       
     };
-
+  
       res.render("index",dataProducts);
   } catch (error) {
       res.send(error.message);
