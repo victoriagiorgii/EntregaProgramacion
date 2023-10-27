@@ -4,17 +4,17 @@
 
 
 {{#each docs}}
-  <p>Nombre del producto: {{this.title}}</p>
+  <h3>Nombre del producto: {{this.title}}</h3>
 {{/each}}
 {{#each payload}}
     
       <div>
-        <p>Nombre producto:{{this.title}}</p>
+        <h3>Nombre producto:{{this.title}}</h3>
         <p> Descripcion {{this.description}}</p>
-        <p>$ {{this.price}}</h4>
+        <p>$ {{this.price}}</p>
         <p>stock: {{this.stock}}</p>
 
-        <button onclick="addToCart(`{{this._id}}`)">
+        <button onclick=" addToCart (`{{this._id}}`)">
           Agregar al carrito
         </button>
       </div>
@@ -31,7 +31,8 @@
     {{#if nextLink}}
 
       <a href="{{nextLink}}"> Siguiente</a>
-      
+
     {{/if}}
   </div>
+  <script src="/js/index.js"></script>
 </div>

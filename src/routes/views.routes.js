@@ -74,12 +74,13 @@ router.get("/cart", async (req, res) => {
     const cid = "65295538c0fbd8486dd71250";
     const cart = await cartsService.getCartById(cid);
     if (!cart) {
-      return res.render("cart not found");
-    } else {
-      res.render("cart", { products: cart.products });
+      return res.status(404).send("carrito no encontrado");
     }
+    console.log(cart.products);
+      res.render("cart", { products: cart.products });
+
   } catch (error) {
-    res.render({ error: error.message });
+    return res.status(500).send({ error: error.message });
   }
 });
 

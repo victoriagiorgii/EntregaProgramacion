@@ -1,0 +1,19 @@
+<h1> Cart </h1>
+<div>
+  {{#each products}}
+  
+    
+      <div>
+        <h3>{{this.productId.title}}</h3>
+        <p>{{this.productId.description}}</p>
+        <p>$ {{this.productId.price}}</p>
+        <p>quantity: {{this.quantity}}</p>
+        <button
+          onclick="deleteFromCart(`{{this.productId._id}}`)"> Eliminar </button>
+      </div>
+    
+  {{/each}}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/cart.js"></script>

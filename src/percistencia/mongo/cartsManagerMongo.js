@@ -8,7 +8,7 @@ export class CartsManagerMongo{
 
     async getCarts(){
         try{
-                const carts = await this.model.find();
+                const carts = await this.model.find().lean();
                 return carts;
         } catch (error){
             throw new Error ("No se puede encontrar los carrirtos de compra");
@@ -18,7 +18,7 @@ export class CartsManagerMongo{
     async getCartById(cartId){
         try{
 
-            const result= await this.model.findById(cartId).populate("products.productId");
+            const result= await this.model.findById(cartId).populate("products.productId").lean();
             if(!result){
                 throw new Error (`El carrito con el ID: '${cartId}'no existe.`);
             };

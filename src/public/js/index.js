@@ -1,26 +1,26 @@
 const addToCart = async (pid) => {
-   try {
-     const cid = "65295538c0fbd8486dd71250";
+   
+     let cid = "65295538c0fbd8486dd71250";
      if (!cid) {
-       console.log("cart not found");
-     }
-     const response = await fetch(
+       console.log("EL CARRITO NO EXISTE");
+       return; }
+     
+       const response = await fetch(
        `http://localhost:8080/api/carts/${cid}/product/${pid}`,
        {
-         method: "POST",
-       }
-     );
-     if (response.status == 200) {
-       Swal.fire({
-         text: "product added to cart successfully",
-         toast: true,
-         position: "top",
-         showConfirmButton: false,
-         timer: 1000,
+         method: "PUT",
        });
-     }
-   } catch (error) {
-     console.log("error adding product to cart: ", error);
-   }
- };
 
+     if (response.status == 200) {
+         const cart= ({cid,pid})
+         console.log('Producto agregado al carrito:', cart);
+      
+      }else{
+         console.error('No se pudo agregar al carrito');
+      }
+   
+};
+
+
+
+  
