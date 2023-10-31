@@ -11,10 +11,12 @@ import { viewsRouter } from "./routes/views.routes.js";
 
 import { connectDB } from "./config/dbConnection.js";
 import { chatService } from "./percistencia/index.js";
+import { usersService } from "./percistencia/index.js";
 import { productsModel } from "./percistencia/mongo/Models/product.model.js";
-import mongoose from "mongoose";
-
-
+import { sessionsRouter } from "./routes/sessions.routes.js";
+import { config } from "./config/config.js";
+import MongoStore from "connect-mongo";
+import {cookieParser} from "cookie-parser";
 
 const PORT= 8080 ;
 const app= express();
@@ -30,6 +32,8 @@ const io = new Server(httpServer);
 
 app.use(viewsRouter);
 
+app.use(cookieParser("claveCookies"));
+
 app.use("/api/products", productsRouter);
 
 app.use("/api/carts", cartsRouter);
@@ -38,7 +42,18 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(express.urlencoded({extended:true}));
 
+//config sesion 
+app.use(session({
+    store:MongoStore.create({
+        ttl:3000,
+        mongoUrl:config.mongo.url
+    }),
+    secret:config.server.secretSession,
+    resave:true,
+    saveUninitialized:true
+}));
 
+app.use("/api/sessions", sessionsRouter);
 
 
 
