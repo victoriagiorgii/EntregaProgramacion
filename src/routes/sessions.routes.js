@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
       });
     }
     //info ok
-    req.sessions.email = user.email;
+    req.session.email = user.email;
     const userName = user.name;
     res.redirect("/home", 200, { userName, style: "home.css" });
   } catch (error) {
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", async (req, res) => {
   try {
-    req.sessions.destroy((error) => {
+    req.session.destroy((error) => {
       if (error)
         return res.render("profile", {
           error: "logout error",

@@ -16,7 +16,8 @@ import { productsModel } from "./percistencia/mongo/Models/product.model.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { config } from "./config/config.js";
 import MongoStore from "connect-mongo";
-import {cookieParser} from "cookie-parser";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 
 const PORT= 8080 ;
 const app= express();
@@ -44,9 +45,9 @@ app.use(express.urlencoded({extended:true}));
 
 //config sesion 
 app.use(session({
-    store:MongoStore.create({
+    store: MongoStore.create({
         ttl:3000,
-        mongoUrl:config.mongo.url
+        mongoUrl:'mongodb+srv://victoria:victoriaAtlas@cluster0.wzeltg5.mongodb.net/coder?retryWrites=true&w=majority'
     }),
     secret:config.server.secretSession,
     resave:true,
