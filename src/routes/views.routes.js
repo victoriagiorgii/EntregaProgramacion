@@ -5,7 +5,7 @@ import { productsModel } from "../percistencia/mongo/Models/product.model.js";
 
 const router = Router();
 
-router.get("/", async (req,res)=>{
+router.get("/index", async (req,res)=>{
 
   const docs = await productsService.getProducts();
   console.log("products", docs);
@@ -81,6 +81,27 @@ router.get("/cart", async (req, res) => {
 
   } catch (error) {
     return res.status(500).send({ error: error.message });
+  }
+});
+
+//sign up
+router.get("/signUp", (req, res) => {
+  res.render("signUp");
+});
+
+//login
+router.get("/", (req, res) => {
+  res.render("Login");
+});
+
+//profile
+router.get("/profile", (req, res) => {
+  if (req.session) {
+    const userEmail = req.session;
+    res.render("profile", {userEmail});
+  } else {
+    res.redirect("/");
+    //agregar sweet alert
   }
 });
 

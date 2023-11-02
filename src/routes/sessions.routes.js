@@ -11,12 +11,12 @@ router.post("/signUp", async (req, res) => {
     const result = await usersService.addUser(userInfo);
     if (result) {
       res.render("logIn", {
-        message: "user created successfully",
+        message: "Registrado con exito",
         style: "logIn.css",
       });
     }
   } catch (error) {
-    res.render("signUp", { error: "error sign up user", style: "signUp.css" });
+    res.render("signUp", { error: "error registro del usuario"});
   }
 });
 
@@ -27,24 +27,22 @@ router.post("/login", async (req, res) => {
     //corroborar si el user existe
     const user = await usersService.getUser({ email: loginForm.email });
     if (!user) {
-      return res.render("logIn", {
-        error: "user not found",
-        style: "logIn.css",
+      return res.render("Login", {
+        error: "Usuario no definido",
       });
     }
     //corroborar contraseña
     if (user.password !== loginForm.password) {
       return res.render("logIn", {
-        error: "incorrect credentials",
-        style: "logIn.css",
+        error: "credencial incorrecta",
       });
     }
     //info ok
     req.session.email = user.email;
     const userName = user.name;
-    res.redirect("/home", 200, { userName, style: "home.css" });
+    res.redirect("/index", 200, { userName });
   } catch (error) {
-    res.render("logIn", { error: "login error", style: "logIn.css" });
+    res.render("logIn", { error: "login error" });
   }
 });
 
@@ -54,12 +52,11 @@ router.get("/logout", async (req, res) => {
       if (error)
         return res.render("profile", {
           error: "logout error",
-          style: "profile.css",
         });
     });
     res.redirect("/", 200, { style: "logIn.css" });
   } catch (error) {
-    res.render("profile", { error: "logout error", style: "profile.css" });
+    res.render("profile", { error: "logout error" });
   }
 });
 
