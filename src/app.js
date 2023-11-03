@@ -30,7 +30,15 @@ const httpServer = app.listen(PORT,()=>console.log(`Servidor ejecutandose en el 
 const io = new Server(httpServer);
 
  await connectDB();
+ app.use(express.static(path.join(__dirname,"/public")));
+ app.use(express.urlencoded({extended:true}));
 
+ 
+ //handlebars
+ app.engine('.handlebars', engine({extname: '.handlebars'}));
+ app.set('view engine', '.handlebars');
+ app.set('views', path.join(__dirname,"/views"));
+ 
 app.use(cookieParser("claveCookies"));
 app.use(session({
     store: MongoStore.create({
@@ -49,17 +57,8 @@ app.use("/api/products", productsRouter);
 
 app.use("/api/carts", cartsRouter);
 
-app.use(express.static(path.join(__dirname,"/public")));
-
-app.use(express.urlencoded({extended:true}));
 
 
-//handlebars
-app.engine('.handlebars', engine({extname: '.handlebars'}));
-app.set('view engine', '.handlebars');
-app.set('views', path.join(__dirname,"/views"));
-
-//socket servidor
 
 //chat
 io.on("connection", async(socket)=>{
