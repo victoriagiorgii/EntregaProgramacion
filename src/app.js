@@ -31,19 +31,7 @@ const io = new Server(httpServer);
 
  await connectDB();
 
-app.use(viewsRouter);
-
 app.use(cookieParser("claveCookies"));
-
-app.use("/api/products", productsRouter);
-
-app.use("/api/carts", cartsRouter);
-
-app.use(express.static(path.join(__dirname,"/public")));
-
-app.use(express.urlencoded({extended:true}));
-
-//config sesion 
 app.use(session({
     store: MongoStore.create({
         ttl:3000,
@@ -53,9 +41,17 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }));
+app.use(viewsRouter);
 
 app.use("/api/sessions", sessionsRouter);
 
+app.use("/api/products", productsRouter);
+
+app.use("/api/carts", cartsRouter);
+
+app.use(express.static(path.join(__dirname,"/public")));
+
+app.use(express.urlencoded({extended:true}));
 
 
 //handlebars

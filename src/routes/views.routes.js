@@ -85,8 +85,8 @@ router.get("/cart", async (req, res) => {
 });
 
 //sign up
-router.get("/signUp", (req, res) => {
-  res.render("signUp");
+router.get("/singUp", (req, res) => {
+  res.render("singUp");
 });
 
 //login
@@ -96,8 +96,9 @@ router.get("/", (req, res) => {
 
 //profile
 router.get("/profile", (req, res) => {
+  console.log(req.session);
   if (req.session) {
-    const userEmail = req.session;
+    const userEmail = req.session.email;
     res.render("profile", {userEmail});
   } else {
     res.redirect("/");

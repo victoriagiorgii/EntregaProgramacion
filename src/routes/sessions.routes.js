@@ -5,23 +5,23 @@ import { usersService } from "../percistencia/index.js";
 const router = Router();
 
 //sign up
-router.post("/signUp", async (req, res) => {
+router.post("/singUp", async (req, res) => {
   try {
     const userInfo = req.body;
     const result = await usersService.addUser(userInfo);
     if (result) {
-      res.render("logIn", {
+      res.render("Login", {
         message: "Registrado con exito",
         style: "logIn.css",
       });
     }
   } catch (error) {
-    res.render("signUp", { error: "error registro del usuario"});
+    res.render("singUp", { error: "error registro del usuario"});
   }
 });
 
 //log in
-router.post("/login", async (req, res) => {
+router.post("/Login", async (req, res) => {
   try {
     const loginForm = req.body;
     //corroborar si el user existe
@@ -33,16 +33,16 @@ router.post("/login", async (req, res) => {
     }
     //corroborar contraseña
     if (user.password !== loginForm.password) {
-      return res.render("logIn", {
+      return res.render("Login", {
         error: "credencial incorrecta",
       });
     }
     //info ok
     req.session.email = user.email;
-    const userName = user.name;
-    res.redirect("/index", 200, { userName });
+    const userEmail = user.name;
+    res.redirect("/profile", 200, { userEmail });
   } catch (error) {
-    res.render("logIn", { error: "login error" });
+    res.render("Login", { error: "login error" });
   }
 });
 
@@ -54,7 +54,7 @@ router.get("/logout", async (req, res) => {
           error: "logout error",
         });
     });
-    res.redirect("/", 200, { style: "logIn.css" });
+    res.redirect("/", 200,{});
   } catch (error) {
     res.render("profile", { error: "logout error" });
   }
