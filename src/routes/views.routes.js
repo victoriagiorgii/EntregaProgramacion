@@ -91,7 +91,7 @@ router.get("/singUp", (req, res) => {
 
 //login
 router.get("/", (req, res) => {
-  res.render("Login");
+  res.render("login");
 });
 
 //profile

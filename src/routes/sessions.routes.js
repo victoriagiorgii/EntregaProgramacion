@@ -1,7 +1,6 @@
 import { Router } from "express";
 //import passport from "passport";
 import { usersService } from "../percistencia/index.js";
-import { usersModel } from "../percistencia/mongo/Models/users.model.js";
 
 const router = Router();
 
@@ -13,7 +12,6 @@ router.post("/singUp", async (req, res) => {
     if (result) {
       res.render("Login", {
         message: "Registrado con exito",
-        style: "logIn.css",
       });
     }
   } catch (error) {
@@ -28,13 +26,13 @@ router.post("/Login", async (req, res) => {
     //corroborar si el user existe
     const user = await addUser.usersService({ email: loginForm.email });
     if (!user) {
-      return res.render("Login", {
+      return res.render("login", {
         error: "Usuario no definido",
       });
     }
     //corroborar contraseña
     if (user.password !== loginForm.password) {
-      return res.render("Login", {
+      return res.render("login", {
         error: "credencial incorrecta",
       });
     }
@@ -43,7 +41,7 @@ router.post("/Login", async (req, res) => {
     const userName = user.name;
     res.redirect("/profile", 200, { userName });
   } catch (error) {
-    res.render("Login", { error: "login error" });
+    res.render("login", { error: "login error" });
   }
 });
 
