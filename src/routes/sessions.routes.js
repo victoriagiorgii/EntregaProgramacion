@@ -24,24 +24,24 @@ router.post("/Login", async (req, res) => {
   try {
     const loginForm = req.body;
     //corroborar si el user existe
-    const user = await addUser.usersService({ email: loginForm.email });
+    const user = await usersService.getUser({ email: loginForm.email });
     if (!user) {
-      return res.render("login", {
+      return res.render("Login", {
         error: "Usuario no definido",
       });
     }
     //corroborar contraseña
     if (user.password !== loginForm.password) {
-      return res.render("login", {
+      return res.render("Login", {
         error: "credencial incorrecta",
       });
     }
     //info ok
     req.session.email = user.email;
-    const userName = user.name;
-    res.redirect("/profile", 200, { userName });
+    const userEmail = user.name;
+    res.redirect("/profile", 200, { userEmail });
   } catch (error) {
-    res.render("login", { error: "login error" });
+    res.render("Login", { error: "login error" });
   }
 });
 
