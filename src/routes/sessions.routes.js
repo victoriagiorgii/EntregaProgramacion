@@ -1,6 +1,7 @@
 import { Router } from "express";
 //import passport from "passport";
 import { usersService } from "../percistencia/index.js";
+import { usersModel } from "../percistencia/mongo/Models/users.model.js";
 
 const router = Router();
 
@@ -25,7 +26,7 @@ router.post("/Login", async (req, res) => {
   try {
     const loginForm = req.body;
     //corroborar si el user existe
-    const user = await usersService.getUser({ email: loginForm.email });
+    const user = await addUser.usersService({ email: loginForm.email });
     if (!user) {
       return res.render("Login", {
         error: "Usuario no definido",
@@ -39,8 +40,8 @@ router.post("/Login", async (req, res) => {
     }
     //info ok
     req.session.email = user.email;
-    const userEmail = user.name;
-    res.redirect("/profile", 200, { userEmail });
+    const userName = user.name;
+    res.redirect("/profile", 200, { userName });
   } catch (error) {
     res.render("Login", { error: "login error" });
   }
