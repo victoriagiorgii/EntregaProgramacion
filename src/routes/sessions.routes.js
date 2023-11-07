@@ -10,7 +10,7 @@ router.post("/singUp", async (req, res) => {
     const userInfo = req.body;
     const result = await usersService.addUser(userInfo);
     if (result) {
-      res.render("Login", {
+      res.render("login", {
         message: "Registrado con exito",
       });
     }
@@ -20,19 +20,19 @@ router.post("/singUp", async (req, res) => {
 });
 
 //log in
-router.post("/Login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const loginForm = req.body;
     //corroborar si el user existe
     const user = await usersService.getUser({ email: loginForm.email });
     if (!user) {
-      return res.render("Login", {
+      return res.render("login", {
         error: "Usuario no definido",
       });
     }
     //corroborar contraseña
     if (user.password !== loginForm.password) {
-      return res.render("Login", {
+      return res.render("login", {
         error: "credencial incorrecta",
       });
     }
@@ -41,7 +41,7 @@ router.post("/Login", async (req, res) => {
     const userEmail = user.name;
     res.redirect("/profile", 200, { userEmail });
   } catch (error) {
-    res.render("Login", { error: "login error" });
+    res.render("login", { error: "login error" });
   }
 });
 
