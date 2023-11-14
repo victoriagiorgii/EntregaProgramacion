@@ -18,6 +18,11 @@ import { config } from "./config/config.js";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import { initializePassport } from "./config/passport.config.js";
+import passport from "passport";
+
+
+
 
 const PORT= 8080 ;
 const app= express();
@@ -33,6 +38,9 @@ const io = new Server(httpServer);
  app.use(express.static(path.join(__dirname,"/public")));
  app.use(express.urlencoded({extended:true}));
 
+ //passport
+ initializePassport();
+app.use(passport.initialize());
  
  //handlebars
  app.engine('.handlebars', engine({extname: '.handlebars'}));
