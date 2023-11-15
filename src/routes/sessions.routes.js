@@ -1,61 +1,120 @@
 import { Router } from "express";
-//import passport from "passport";
 import { usersService } from "../percistencia/index.js";
+import passport from "passport";
+import { generateToken } from "../utils.js";
+import { config } from "../config/config.js";
 
 const router = Router();
 
 //sign up
-router.post("/singUp", async (req, res) => {
-  try {
-    const userInfo = req.body;
-    const result = await usersService.addUser(userInfo);
-    if (result) {
+router.post("/singUp",passport.authenticate ("singUpLocalStrategy",{ session:false, failureRedirect:"api/sessions/fail-singUp",
+}), async(req,res)=> {
+  //try {
+   // const userInfo = req.body;
+   // const result = await usersService.addUser(userInfo);
+   // if (result) {
       res.render("login", {
         message: "Registrado con exito",
       });
     }
-  } catch (error) {
-    res.render("singUp", { error: "error registro del usuario"});
-  }
+);
+router.get("fail-singUp", (req,res)=>{
+  res.render("singUp", {
+    error:"error creacion de usuario",
+    
+  });
 });
 
-//log in
-router.post("/login", async (req, res) => {
-  try {
-    const loginForm = req.body;
-    //corroborar si el user existe
-    const user = await usersService.getUser({ email: loginForm.email });
-    if (!user) {
-      return res.render("login", {
-        error: "Usuario no definido",
-      });
-    }
-    //corroborar contraseña
-    if (user.password !== loginForm.password) {
-      return res.render("login", {
-        error: "credencial incorrecta",
-      });
-    }
-    //info ok
-    req.session.email = user.email;
-    const userEmail = user.name;
-    res.redirect("/profile", 200, { userEmail });
-  } catch (error) {
-    res.render("login", { error: "login error" });
+//} catch (error) {
+  //res.render("singUp", { error: "error registro del usuario"});
+//}
+
+
+
+//sign up with github
+router.get("/signup-github", passport.authenticate("signupGithubStrategy"));
+router.get(
+  config.github.callbackUrl,
+  passport.authenticate("signUpGithubStrategy", {
+    session: false,
+    failureRedirect: "/api/sessions/fail-signup",
+  }),
+  (req, res) => {
+    const token = generateToken(req.user);
+    res.cookie("cookieToken", token).render("profile", {});
   }
+);
+
+
+
+//log in
+router.post("/login", passport.authenticate("loginLocalStrategy",{
+  session:false,
+  failureRedirect:"/api/sessions/fail-login",
+}), async (req, res) => {
+   
+    //const loginForm = req.body;
+    //corroborar si el user existe
+    //const user = await usersService.getUser({ email: loginForm.email });
+   // if (!user) {
+  const token = generateToken(req.user)
+  res
+  .cookie("cookieToken", token)
+  .json({ status: "success", message: "login successfully" });
+}
+);
+
+router.get("/fail-login", (req, res) => {
+res.render("login", {
+error: "login error",
 });
+});
+
+//log in up with github
+router.get("/login-github", passport.authenticate("loginGithubStrategy"));
+router.get(
+  config.github.callbackUrl,
+  passport.authenticate("loginGithubStrategy", {
+    session: false,
+    failureRedirect: "/api/sessions/fail-login",
+  }),
+  (req, res) => {
+    const token = generateToken(req.user);
+    res
+      .cookie("cookieToken", token)
+      .redirect("/profile", 200, {});
+  }
+);
+  
+
+//profile
+router.post("/profile", passport.authenticate("jwtAuth", {
+    session: false,
+    failureRedirect: "/api/sessions/fail-auth",
+  }),
+  async (req, res) => {
+    try {
+      res.json({ status: "success", message: "valid request", data: req.user });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+router.get("/fail-auth", (req, res) => {
+  res.json({ status: "error", message: "token invalido" });
+});
+
+  
+  
+  
 
 router.get("/logout", async (req, res) => {
   try {
-    req.session.destroy((error) => {
-      if (error)
-        return res.render("profile", {
-          error: "logout error",
-        });
-    });
-    res.redirect("/", 200,{});
+    res.clearCookie("cookieToken");
+    res.redirect("/");
   } catch (error) {
-    res.render("profile", { error: "logout error" });
+    res.render("profile", { error: "logout error"});
   }
 });
 
