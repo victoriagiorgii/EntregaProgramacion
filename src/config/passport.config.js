@@ -12,7 +12,7 @@ const extractJwt = jwt.ExtractJwt;
 export const initializePassport = () => {
   //signup
   passport.use(
-    "signupLocalStrategy",
+    "singUpLocalStrategy",
     new localStrategy(
       {
         passReqToCallback: true,
@@ -46,7 +46,7 @@ export const initializePassport = () => {
 
   //signup with github
   passport.use(
-    "signupGithubStrategy",
+    "singUpGithubStrategy",
     new GithubStrategy(
       {
         clientID: config.github.clientId,

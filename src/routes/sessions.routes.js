@@ -32,12 +32,12 @@ router.get("fail-singUp", (req,res)=>{
 
 
 //sign up with github
-router.get("/signup-github", passport.authenticate("signupGithubStrategy"));
+router.get("/singUp-github", passport.authenticate("singUpGithubStrategy"));
 router.get(
   config.github.callbackUrl,
-  passport.authenticate("signUpGithubStrategy", {
+  passport.authenticate("singUpGithubStrategy", {
     session: false,
-    failureRedirect: "/api/sessions/fail-signup",
+    failureRedirect: "/api/sessions/fail-singUp",
   }),
   (req, res) => {
     const token = generateToken(req.user);
