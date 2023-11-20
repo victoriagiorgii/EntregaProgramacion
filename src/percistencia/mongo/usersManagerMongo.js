@@ -34,4 +34,14 @@ export class UsersManagerMongo {
       throw new Error(`get user error: ${error.message}`);
     }
   }
+
+  async getUserByEmail(email) {
+    try {
+      const result = await this.model.findOne({ email: email });
+      return result;
+    } catch (error) {
+      console.log(`get user by email error: ${error.message}`);
+      throw new Error(`get user by email error: ${error.message}`);
+    }
+  }
 }
