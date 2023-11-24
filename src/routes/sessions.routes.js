@@ -88,7 +88,7 @@ router.get(
   
 
 //profile
-router.post("/profile", passport.authenticate("jwtAuth", {
+router.get("/api/sessions/profile", passport.authenticate("jwtAuth", {
     session: false,
     failureRedirect: "/api/sessions/fail-auth",
   }),
