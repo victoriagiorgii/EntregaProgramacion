@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { usersService } from "../percistencia/index.js";
 import passport from "passport";
 import { generateToken } from "../utils.js";
 import { config } from "../config/config.js";
