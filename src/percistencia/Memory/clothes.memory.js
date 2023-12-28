@@ -1,6 +1,6 @@
 const Product= [];
 
-export class ProductMemory{
+export class ClothesMemory{
     get(){
         return Product;
     };
