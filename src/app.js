@@ -20,6 +20,9 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
+import {errorHandler} from "../src/middleware/errorHandler.js";
+
+import {usersRoutes} from "./routes/users.routes.js";
 
 
 
@@ -28,6 +31,11 @@ const PORT= 8080 ;
 const app= express();
 app.use(express.json());
 
+
+
+app.use("/api/users", usersRoutes);
+
+app.use(errorHandler);
 
 
 const httpServer = app.listen(PORT,()=>console.log(`Servidor ejecutandose en el puerto ${PORT}`));
