@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { cartsService, productsService } from "../percistencia/index.js";
 import { productsModel } from "../percistencia/mongo/Models/product.model.js";
-
+import { logger } from "../helpers/logger.js";
 
 const router = Router();
 
@@ -104,6 +104,13 @@ router.get("/profile", (req, res) => {
     res.redirect("/");
     //agregar sweet alert
   }
+});
+
+router.get("/testLogger", (req,res) =>{
+  logger.error("log error");
+  logger.warning("log warning");
+  logger.debbug("log debbug");
+  res.send("prueba logger");
 });
 
 export {router as viewsRouter}

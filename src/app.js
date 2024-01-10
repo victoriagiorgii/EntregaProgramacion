@@ -23,8 +23,7 @@ import passport from "passport";
 import {errorHandler} from "../src/middleware/errorHandler.js";
 
 import {usersRoutes} from "./routes/users.routes.js";
-
-
+import { logger } from "./helpers/logger.js";
 
 
 const PORT= 8080 ;
@@ -36,9 +35,10 @@ app.use(express.json());
 app.use("/api/users", usersRoutes);
 
 app.use(errorHandler);
+const httpServer = app.listen(PORT,()=>logger.info(`Servidor ejecutandose en el puerto ${PORT}`));
 
 
-const httpServer = app.listen(PORT,()=>console.log(`Servidor ejecutandose en el puerto ${PORT}`));
+
 
 const io = new Server(httpServer);
 
@@ -65,6 +65,16 @@ app.use(session({
     resave:true,
     saveUninitialized:true
 }));
+
+app.get("/", (req,res)=>{
+    logger.debug("Este es un mensaje de debug");
+    logger.http("Este es un mensaje http");
+    logger.warn("Este es un mensaje de advertencia");
+    logger.error("Este es un mensaje de error");
+    res.send("Peticion recibida");
+  });
+
+
 app.use(viewsRouter);
 
 app.use("/api/sessions", sessionsRouter);

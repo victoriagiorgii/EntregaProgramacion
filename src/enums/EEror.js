@@ -4,5 +4,6 @@ export const EEror = {
     INVALID_BODY:3,
     PRODUCTS_ERROR:4,
     INVALID_PARAM:5,
+    INVALID_BODY_JSON:6,
 
 }
