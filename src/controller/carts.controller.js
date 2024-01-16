@@ -1,4 +1,4 @@
-import { ProductsService } from "../service/clothes.service.js";
+import { ProductsService } from "../service/product.service.js";
 import { CartsService } from "../service/cart.service.js";
 import {v4 as uuidv4} from 'uuid';
 
