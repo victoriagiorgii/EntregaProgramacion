@@ -24,6 +24,8 @@ import {errorHandler} from "../src/middleware/errorHandler.js";
 
 import {usersRoutes} from "./routes/users.routes.js";
 import { logger } from "./helpers/logger.js";
+import { swaggerSpecs } from "./config/swagger.config.js";
+import  SwaggerUI from "swagger-ui-express";
 
 
 const PORT= 8080 ;
@@ -33,6 +35,7 @@ app.use(express.json());
 
 
 app.use("/api/users", usersRoutes);
+app.use("/api/docs", SwaggerUI.serve, SwaggerUI.setup(swaggerSpecs));
 
 app.use(errorHandler);
 const httpServer = app.listen(PORT,()=>logger.info(`Servidor ejecutandose en el puerto ${PORT}`));

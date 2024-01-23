@@ -1,8 +1,6 @@
 
 import { ProductsService } from "../service/product.service.js";
-import { EEror } from "../enums/EEror.js";
-import { CustomError } from "../service/error/customError.service.js";
-import { productCreateError } from "../service/error/productCreateError.service.js";
+
 
 export class ProductsController{
     static getProducts = async(req,res)=>{
