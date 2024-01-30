@@ -7,7 +7,7 @@ const router = Router();
 router.post("/signup", passport.authenticate("signupLocalStrategy",{
     failureRedirect:"/api/sessions/fail-signup"
 }) , SessionsController.redirectLogin);
-router.get("/fail-signup", SessionsController.failSignup);
+router.get("/fail-signup", SessionsController.failSingUp);
 router.post("/login", passport.authenticate("loginLocalStrategy",{
     failureRedirect:"/api/sessions/fail-login"
 }) , SessionsController.redirecProfile);

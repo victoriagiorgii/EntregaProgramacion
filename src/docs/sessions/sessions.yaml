@@ -41,5 +41,5 @@ components:
           type: string
           description: Contraseña del usuario
       example:
-        email: juli@gmail.com
-        password: flor123
+        email: vicki@gmail.com
+        password: vicki123
