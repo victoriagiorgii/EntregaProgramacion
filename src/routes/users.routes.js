@@ -2,7 +2,8 @@ import { Router } from "express";
 import { generateUser } from "../helpers/mock.js";
 import { UsersController } from "../controller/users.controller.js";
 import { checkRole } from "../middleware/auth.js";
-
+import { checkRole, isAuth } from "../middleware/auth.js";
+import { uploadDocuments } from "../utils.js";
 
 const router = Router();
 
@@ -19,4 +20,10 @@ router.get("/",(req,res) =>{
     res.json({status:"success", data:users});
 });
 router.put("/premium/:uid", checkRole(["admin"]), UsersController.modifyRole );
+router.post("/:uid/documents", isAuth, uploadDocuments.fields([
+    {name:"identificacion", maxCount:1},
+    {name:"domicilio", maxCount:1},
+    {name:"estadDeCuenta", maxCount:1},
+]), UsersController.uploadUserDocuments);
+
 export {router as usersRoutes};

@@ -11,8 +11,7 @@ const extractJwt = jwt.ExtractJwt;
 
 export const initializePassport = () => {
   //signup
-  passport.use(
-    "singUpLocalStrategy",
+  passport.use("singUpLocalStrategy",
     new localStrategy(
       {
         passReqToCallback: true,
@@ -33,16 +32,17 @@ export const initializePassport = () => {
             age,
             email: username,
             password: createHash(password),
+            avatar: req.file.filename
           };
-          const userCreated = await usersService.addUser(newUser);
-
-          return done(null, userCreated);
-        } catch (error) {
-          return done(error);
+          const userCreated = await usersModel.addUser(newUser);
+                return done (null, userCreated),
+                user. last_connection = new Date(),
+                await usersDao.updateUser(user._id, user)
+            } catch (error) {
+                return done(null,false);
+            }
         }
-      }
-    )
-  );
+    ));
 
   //signup with github
   passport.use(
